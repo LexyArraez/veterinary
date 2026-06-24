@@ -17,6 +17,6 @@ class Base(DeclarativeBase):
 def get_db():
     db = SessionLocal()
     try:
-        yield db  # mantiene un estado
+        yield db  # mantiene un estado 
     finally:
         db.close()
