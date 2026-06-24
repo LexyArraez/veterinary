@@ -1,0 +1,32 @@
+
+# Environments
+.env
+.env.*
+!.env.example
+
+venv/
+.venv/
+env/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+### Configuración de Editores e IDEs ###
+.idea/
+.vscode/
