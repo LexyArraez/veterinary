@@ -8,7 +8,7 @@ class MascotaSchema(Base):
     __tablename__ = "pets"
 
     id_pets: Mapped[int] = mapped_column(primary_key=True, index=True)
-    customer_id: Mapped[int] = mapped_column(ForeignKey("customer.id"), nullable=False)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.customer_id"), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     species: Mapped[str] = mapped_column(String(50), nullable=False)
     race: Mapped[str] = mapped_column(String(50), nullable=False)

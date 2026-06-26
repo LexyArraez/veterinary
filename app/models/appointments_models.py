@@ -8,7 +8,7 @@ class CitaSchema(Base):
     __tablename__ = "appointments"
 
     id_appointments: Mapped[int] = mapped_column(primary_key=True, index=True)
-    id_pets: Mapped[int] = mapped_column(ForeignKey("id.pets"), nullable=False)
-    id_veterinarians: Mapped[int] = mapped_column(ForeignKey("id.veterinarians"), nullable=False)
+    id_pets: Mapped[int] = mapped_column(ForeignKey("pets.id_pets"), nullable=False)
+    id_veterinarians: Mapped[int] = mapped_column(ForeignKey("veterinarians.id_veterinarians"), nullable=False)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     status: Mapped[str] = mapped_column(String(50), nullable=False)

@@ -1,0 +1,37 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from app.database.db_connection import get_db
+from app.schemas.customers_schema import CustomerCreate, CustomerResponse, CustomerUpdate
+from app.crud import customers_crud
+
+router = APIRouter(prefix="/customers", tags=["Clientes (Customers)"])
+
+@router.post("/", response_model=CustomerResponse, status_code=status.HTTP_201_CREATED)
+def crear_cliente(customer_in: CustomerCreate, db: Session = Depends(get_db)):
+    return customers_crud.create_customer(db=db, customer_in=customer_in)
+
+@router.get("/", response_model=list[CustomerResponse])
+def listar_clientes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return customers_crud.get_customers(db=db, skip=skip, limit=limit)
+
+@router.get("/{customer_id}", response_model=CustomerResponse)
+def obtener_cliente(customer_id: int, db: Session = Depends(get_db)):
+    db_customer = customers_crud.get_customer_by_id(db=db, customer_id=customer_id)
+    if not db_customer:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    return db_customer
+
+@router.put("/{customer_id}", response_model=CustomerResponse)
+def actualizar_cliente(customer_id: int, customer_in: CustomerUpdate, db: Session = Depends(get_db)):
+    db_customer = customers_crud.update_customer(db=db, customer_id=customer_id, customer_in=customer_in)
+    if not db_customer:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    return db_customer
+
+@router.delete("/{customer_id}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar_cliente(customer_id: int, db: Session = Depends(get_db)):
+    db_customer = customers_crud.get_customer_by_id(db=db, customer_id=customer_id)
+    if not db_customer:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    customers_crud.delete_customer(db=db, customer_id=customer_id)
+    return None
