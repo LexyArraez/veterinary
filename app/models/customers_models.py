@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.db_connection import Base
+
+if TYPE_CHECKING:
+    from app.models.pets_models import PetsModel
 
 
 class CustomerModel(Base):
@@ -13,3 +18,8 @@ class CustomerModel(Base):
     phone: Mapped[str] = mapped_column(String(20), nullable=False)
     document_type: Mapped[str] = mapped_column(String(30), nullable=False)
     document_number: Mapped[str] = mapped_column(String(30), nullable=False)
+
+    pets: Mapped[list["PetsModel"]] = relationship(
+        back_populates="customer",
+        cascade="all, delete-orphan"
+    )

@@ -3,7 +3,6 @@ from app.models.customers_models import CustomerModel
 from app.schemas.customers_schema import CustomerCreate, CustomerUpdate
 
 
-
 def create_customer(db: Session, customer_in: CustomerCreate):
     db_customer = CustomerModel(**customer_in.model_dump())
     db.add(db_customer)
@@ -17,10 +16,8 @@ def get_customers(db: Session, skip: int = 0, limit: int = 100):
     return db.query(CustomerModel).offset(skip).limit(limit).all()
 
 
-
 def get_customer_by_id(db: Session, customer_id: int):
     return db.query(CustomerModel).filter(CustomerModel.customer_id == customer_id).first()
-
 
 
 def update_customer(db: Session, customer_id: int, customer_in: CustomerUpdate):

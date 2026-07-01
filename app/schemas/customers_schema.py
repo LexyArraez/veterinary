@@ -16,7 +16,6 @@ class CustomerCreate(CustomerBase):
 class CustomerUpdate(CustomerBase):
     pass
 
-class CustomerResponse(CustomerBase):
+class CustomerRead(CustomerBase):
     customer_id: int
-
     model_config = {"from_attributes": True}
